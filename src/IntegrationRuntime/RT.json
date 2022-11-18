@@ -1,0 +1,12 @@
+{
+	"name": "",
+	"properties": {
+		"type": "SelfHosted",
+		"typeProperties": {
+			"linkedInfo": {
+				"resourceId": "",
+				"authorizationType": "Rbac"
+			}
+		}
+	}
+}

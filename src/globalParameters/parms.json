@@ -1,0 +1,26 @@
+{
+    "Email_Notification_URL": {
+        "type": "string",
+        "value": ""
+    },
+    "SubscriptionID": {
+        "type": "string",
+        "value": ""
+    },
+    "TeamAlert_SubscriptionID": {
+        "type": "string",
+        "value": ""
+    },
+    "TeamAlert_ResourceGroup": {
+        "type": "string",
+        "value": ""
+    },
+    "TeamAlert_TeamWebhookURL": {
+        "type": "string",
+        "value": ""
+    },
+    "TeamAlert_PushNotification": {
+        "type": "bool",
+        "value": true
+    }
+}

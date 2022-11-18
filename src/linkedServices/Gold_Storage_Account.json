@@ -1,0 +1,17 @@
+{
+	"name": "ADLS_GEN2_GOLD",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "blob storage for gold level data",
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName='';EndpointSuffix=core.windows.net;",
+			"encryptedCredential": ""
+		},
+		"connectVia": {
+			"referenceName": "Shared-RT",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
