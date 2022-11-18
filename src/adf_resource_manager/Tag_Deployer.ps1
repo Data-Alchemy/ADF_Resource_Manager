@@ -5,7 +5,7 @@
 
 # Pass parameter or use default value #
 param($Resource_Name,$Tags)
-If ($Resource_Name -eq $null){$Resource_Name = 'vdwsemantictest'}
+If ($Resource_Name -eq $null){$Resource_Name = ''}
 If ($Tags -eq $null){$Tags = "Owner=Data_Engineering Cost_Center="}
 $Split_Tags = $($Tags -split " ")
 
