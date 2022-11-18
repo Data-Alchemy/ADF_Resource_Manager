@@ -1,0 +1,9 @@
+{
+    "type": "FactoryVSTSConfiguration",
+    "projectName": "",
+    "tenantId": "",
+    "accountName": "",
+    "repositoryName": "",
+    "collaborationBranch": "main",
+    "rootFolder": "/"
+}
