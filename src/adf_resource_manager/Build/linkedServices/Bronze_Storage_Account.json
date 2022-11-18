@@ -10,7 +10,7 @@
 			"encryptedCredential": ""
 		},
 		"connectVia": {
-			"referenceName": "Shared-RT",
+			"referenceName": "Data_Engineering_Self_Hosted",
 			"type": "IntegrationRuntimeReference"
 		}
 	}

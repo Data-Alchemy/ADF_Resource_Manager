@@ -3,16 +3,34 @@
 
 #Initialization
 
+#######################################
+
 # Pass parameter or use default value #
 param($Resource_Name,$Tags)
-If ($Resource_Name -eq $null){$Resource_Name = ''}
-If ($Tags -eq $null){$Tags = "Owner=Data_Engineering Cost_Center="}
+
+$Default_Resource_Name = "vdwsemantictest"
+$Default_Tags = "Owner=Data_Engineering Cost_Center="
+
+#######################################
+
+If ($Resource_Name -eq $null){$Resource_Name = $Default_Resource_Name}
+
+If ($Tags -eq $null){
+
+	$Tag_file = (Get-Content .\src\adf_resource_manager\Build\tags\tag.json | ConvertFrom-Json)
+	$tag_iterator =foreach ($info in $Tag_file.PSObject.Properties){$info.Name+'='+$info.Value}
+	$tag_data = [String]::Join(" ",($var))
+
+	If (
+		$Tag_file.Count -eq 0) {$Tags = $Default_Tags} else {$Tags = $tag_data}
+	}
+
 $Split_Tags = $($Tags -split " ")
 
 # Get Credentials #
-$client_id =  (Get-Content src\credentials\id.json | ConvertFrom-Json).service_principal 
-$secret = (Get-Content src\credentials\id.json | ConvertFrom-Json).client_secret #| ConvertTo-SecureString -AsPlainText -Force
-$tenant = (Get-Content src\credentials\id.json | ConvertFrom-Json).tenant
+$client_id =  (Get-Content src\adf_resource_manager\Build\credentials\id.json | ConvertFrom-Json).service_principal 
+$secret = (Get-Content src\adf_resource_manager\Build\credentials\id.json | ConvertFrom-Json).client_secret #| ConvertTo-SecureString -AsPlainText -Force
+$tenant = (Get-Content src\adf_resource_manager\Build\credentials\id.json | ConvertFrom-Json).tenant
 
 # login #
 

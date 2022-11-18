@@ -1,0 +1,103 @@
+{
+    "name": "Data Engineering Teams Alert",
+    "properties": {
+        "description": "Sends alert notification to Teams Channel",
+        "activities": [
+            {
+                "name": "Set Message schema",
+                "type": "SetVariable",
+                "dependsOn": [],
+                "userProperties": [],
+                "typeProperties": {
+                    "variableName": "messageCard",
+                    "value": {
+                        "value": "{\n    \"@type\": \"MessageCard\",\n    \"@context\": \"http://schema.org/extensions\",\n    \"themeColor\": \"0076D7\",\n    \"summary\": \"Pipeline status alert message\",\n    \"sections\": [\n        {\n            \"activityTitle\": \"Pipeline execution alert\",\n            \"facts\": [\n                {\n                    \"name\": \"Subscription Id:\",\n                    \"value\": \"@{pipeline().parameters.subscription}\"\n                },\n                {\n                    \"name\": \"Resource Group:\",\n                    \"value\": \"@{pipeline().parameters.resourceGroup}\"\n                },\n                {\n                    \"name\": \"Data Factory Name:\",\n                    \"value\": \"@{pipeline().DataFactory}\"\n                },\n                {\n                    \"name\": \"Pipeline RunId:\",\n                    \"value\": \"@{pipeline().parameters.runId}\"\n                },\n                {\n                    \"name\": \"Pipline Name:\",\n                    \"value\": \"@{pipeline().parameters.Pipeline}\"\n                },\n                {\n                    \"name\": \"Pipeline Status:\",\n                    \"value\": \"@{pipeline().parameters.status}\"\n                },\n                {\n                    \"name\": \"Execution Start Time (UTC):\",\n                    \"value\": \"@{pipeline().TriggerTime}\"\n                },\n                {\n                    \"name\": \"Execution Finish Time (UTC):\",\n                    \"value\": \"@{utcnow()}\"\n                },\n                {\n                    \"name\": \"Message:\",\n                    \"value\": \"@{pipeline().parameters.message}\"\n                },\n                {\n                    \"name\": \"Notification Time (UTC):\",\n                    \"value\": \"@{utcnow()}\"\n                }\n            ],\n            \"markdown\": true\n        }\n    ],\n    \"potentialAction\": [\n        {\n            \"@type\": \"OpenUri\",\n            \"name\": \"View pipeline run\",\n            \"targets\": [\n                {\n                    \"os\": \"default\",\n                    \"uri\": \"@{concat('https://adf.azure.com/monitoring/pipelineruns/',pipeline().parameters.runId,'?factory=/subscriptions/',pipeline().parameters.subscription,'/resourceGroups/',pipeline().parameters.resourceGroup,'/providers/Microsoft.DataFactory/factories/',pipeline().DataFactory)}\"\n                },\n                        {\n            \"@type\": \"OpenUri\",\n            \"name\": \"View Documentation\",\n            \"targets\": [\n                {\n                    \"os\": \"default\",\n                    \"uri\": \"@{concat('https://github.com/Data-Alchemy/ADF_Resource_Manager')}\"\n                }\n            ]\n        }\n    ]\n}",
+                        "type": "Expression"
+                    }
+                }
+            },
+            {
+                "name": "Invoke Teams Web Call",
+                "type": "WebActivity",
+                "dependsOn": [
+                    {
+                        "activity": "Set Message schema",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 1,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "url": {
+                        "value": "@pipeline().parameters.teamWebhookUrl",
+                        "type": "Expression"
+                    },
+                    "method": "POST",
+                    "body": {
+                        "value": "@json(variables('messageCard'))",
+                        "type": "Expression"
+                    }
+                }
+            }
+        ],
+        "parameters": {
+            "subscription": {
+                "type": "string",
+                "defaultValue": ""
+            },
+            "resourceGroup": {
+                "type": "string",
+                "defaultValue": "@pipeline().globalParameters.Resource_Group"
+            },
+            "triggerTime": {
+                "type": "string",
+                "defaultValue": "@pipeline().TriggerTime"
+            },
+            "status": {
+                "type": "string",
+                "defaultValue": "@activity('Specify name of the calling pipeline').Status"
+            },
+            "message": {
+                "type": "string",
+                "defaultValue": "@activity('Specify name of the calling pipeline').Error['message']"
+            },
+            "runDuration": {
+                "type": "string",
+                "defaultValue": "@activity('SpecifyactivityName').Duration"
+            },
+            "teamWebhookUrl": {
+                "type": "string",
+                "defaultValue": "@pipeline().globalParameters.TeamAlert_TeamWebhookURL"
+            },
+            "endtime": {
+                "type": "string",
+                "defaultValue": "@string(utcnow())"
+            },
+            "runId": {
+                "type": "string",
+                "defaultValue": "@pipeline().runId"
+            },
+            "Pipeline": {
+                "type": "string",
+                "defaultValue": "@pipeline().Pipeline"
+            }
+        },
+        "variables": {
+            "messageCard": {
+                "type": "String"
+            }
+        },
+        "folder": {
+            "name": "Common"
+        },
+        "annotations": []
+    }
+}

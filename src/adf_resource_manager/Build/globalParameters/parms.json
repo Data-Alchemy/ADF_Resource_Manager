@@ -3,6 +3,10 @@
         "type": "string",
         "value": ""
     },
+    "Resource_Group": {
+        "type": "string",
+        "value": ""
+    },
     "SubscriptionID": {
         "type": "string",
         "value": ""

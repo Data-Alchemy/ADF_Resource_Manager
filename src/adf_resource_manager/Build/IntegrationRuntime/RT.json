@@ -1,5 +1,5 @@
 {
-	"name": "",
+	"name": "Data_Engineering_Self_Hosted",
 	"properties": {
 		"type": "SelfHosted",
 		"typeProperties": {
