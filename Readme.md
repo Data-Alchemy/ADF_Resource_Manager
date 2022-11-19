@@ -106,4 +106,4 @@ Place the CLI in a waiting state until a condition of a resources is met.
 
 
 
-authors = ["sebastian hansen <sebastian.hansen@pniazure.com>"]
+authors = ["sebastian hansen <sebastian.hansen@dataalchemy.dev>"]
