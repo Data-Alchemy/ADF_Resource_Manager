@@ -103,7 +103,4 @@ Place the CLI in a waiting state until a condition of a resources is met.
 
 [deployment-diagram]: https://lucid.app/publicSegments/view/2d06c63f-a0ef-445f-a0e7-f9cde79ccfcb/image.png
 
-
-
-
 authors = ["sebastian hansen <sebastian.hansen@dataalchemy.dev>"]
